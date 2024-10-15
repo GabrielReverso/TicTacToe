@@ -7,7 +7,6 @@
     <title>Document</title>
 
     <style>
-
         html {
             font-size: 1.1vw;
         }
@@ -77,9 +76,15 @@
             font-family: Arial, Helvetica, sans-serif;
             transition: all .1s ease-in-out;
 
-            &:hover{
+            &:hover {
                 background-color: rgb(224, 179, 121);
             }
+        }
+
+        .area p {
+            font-size: inherit;
+            font-family: inherit;
+            margin: 0;
         }
 
         .reset {
@@ -111,15 +116,15 @@
         <h2>MAKE YOUR MOVE</h2>
     </header>
     <div class="container">
-        <div class="area" id="1" onclick="selectArea(this.id)"></div>
-        <div class="area" id="2" onclick="selectArea(this.id)"></div>
-        <div class="area" id="3" onclick="selectArea(this.id)"></div>
-        <div class="area" id="4" onclick="selectArea(this.id)"></div>
-        <div class="area" id="5" onclick="selectArea(this.id)"></div>
-        <div class="area" id="6" onclick="selectArea(this.id)"></div>
-        <div class="area" id="7" onclick="selectArea(this.id)"></div>
-        <div class="area" id="8" onclick="selectArea(this.id)"></div>
-        <div class="area" id="9" onclick="selectArea(this.id)"></div>
+        <div class="area" id="area-0" onclick="selectArea(this.id)"><p></p></div>
+        <div class="area" id="area-1" onclick="selectArea(this.id)"><p></p></div>
+        <div class="area" id="area-2" onclick="selectArea(this.id)"><p></p></div>
+        <div class="area" id="area-3" onclick="selectArea(this.id)"><p></p></div>
+        <div class="area" id="area-4" onclick="selectArea(this.id)"><p></p></div>
+        <div class="area" id="area-5" onclick="selectArea(this.id)"><p></p></div>
+        <div class="area" id="area-6" onclick="selectArea(this.id)"><p></p></div>
+        <div class="area" id="area-7" onclick="selectArea(this.id)"><p></p></div>
+        <div class="area" id="area-8" onclick="selectArea(this.id)"><p></p></div>
     </div>
 
     <div class="reset" onclick="reset()">RESET</div>
@@ -128,16 +133,18 @@
         let oTurn = false;
         function selectArea(id) {
             const area = document.getElementById(id);
-            area.innerText = oTurn === false ? "X" : "O";
+            const areaText = document.querySelector(`#${id} p`);
+            areaText.innerHTML = oTurn === false ? "X" : "O";
             oTurn = !oTurn;
             area.style = "cursor: default; pointer-events: none";
             console.log(`Clicou no id: ${id}`);
             if (checkWinner()) {
                 const label = document.querySelector("h2");
-                label.innerHTML = oTurn ? "X IS THE WINNER" : "O IS THE WINNER"
+                label.innerHTML = oTurn ? "X IS THE WINNER" : "O IS THE WINNER";
             }
         }
 
+        const areasText = document.querySelectorAll(".area p");
         const areas = document.querySelectorAll(".area");
 
         function checkWinner() {
@@ -154,12 +161,20 @@
 
             for (let i = 0; i < winningCombinations.length; i++) {
                 const combination = winningCombinations[i];
-                if (areas[combination[0]].innerText === areas[combination[1]].innerText &&
-                    areas[combination[1]].innerText === areas[combination[2]].innerText &&
-                    areas[combination[0]].innerText !== "") {
+                if (areasText[combination[0]].innerHTML === areasText[combination[1]].innerHTML &&
+                    areasText[combination[1]].innerHTML === areasText[combination[2]].innerHTML &&
+                    areasText[combination[0]].innerHTML !== "") {
+
                     console.log("Vencedor!");
-                    const container = document.querySelector(".container")
-                    container.style = "pointer-events: none; cursor: default"
+
+                    areasText[combination[0]].style.color = "purple";
+                    areasText[combination[1]].style.color = "purple";
+                    areasText[combination[2]].style.color = "purple";
+
+                    areas.forEach((area) => {
+                        area.style = "pointer-events: none; cursor: default";
+                    })
+
                     return true;
                 }
             }
@@ -168,14 +183,21 @@
         }
 
         function reset() {
-            const areas = document.querySelectorAll(".area");
+            
+            areasText.forEach((areaText) => {
+                areaText.innerHTML = "";
+                areaText.style.color = "black";
+            })
 
             areas.forEach((area) => {
-                area.innerText = ""
-                area.style = "pointer-events: all; cursor: pointer"
-                const label = document.querySelector("h2");
-                label.innerText = "MAKE YOUR MOVE"
+                area.style = "pointer-events: all; cursor: pointer";
             })
+
+            const label = document.querySelector("h2");
+
+            label.innerHTML = "MAKE YOUR MOVE";
+
+            oTurn = false;
         }
 
     </script>
