@@ -1,6 +1,6 @@
 # Tic Tac Toe Web App
 
-Welcome to the **Tic Tac Toe** repository, a classic strategy game developed in HTML and JavaScript. This web application offers an interactive and fun experience, allowing you to play against a friend or challenge yourself.
+Welcome to the **Tic Tac Toe** repository, a classic strategy game developed in HTML and JavaScript. This web application offers an interactive and fun experience, allowing you to play against a friend.
 
 ## Features
 
